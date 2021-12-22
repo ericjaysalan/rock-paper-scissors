@@ -1,17 +1,53 @@
-// create a function that evaluates player and computer choices
-// return a string that declares the winner
 const choices = ["rock", "paper", "scissors"];
-const playerPick = prompt("Rock, Paper, Scissors: ").toLowerCase();
 
 const getRandomPick = () => choices[Math.floor(Math.random() * choices.length)];
-const computerPick = getRandomPick();
+const getPlayerPick = () => {
+  while (true) {
+    let playerPick = prompt("rock, paper, scissors: ");
+
+    if (playerPick === null) {
+      return null;
+    } else if (playerPick.toLowerCase() === "rock" || playerPick.toLowerCase() === "paper" || playerPick.toLowerCase() === "scissors") {
+      return playerPick;
+    } else {
+      continue;
+    }
+  }
+}
+
+const round = (roundAmount) => {
+  let playerWins = 0;
+  let computerWins = 0;
+
+  for (let counter = 1; counter <= roundAmount; counter++) {
+    console.log(`Round ${counter}`);
+    const playerPick = getPlayerPick();
+    const computerPick = getRandomPick();
+    if (playerPick === null) {
+      console.log("You quit");
+      break;
+    }
+
+    const result = playRound(playerPick, computerPick);
+    if (result.includes("win")) {
+      playerWins++;
+    } else if (result.includes("lose")) {
+      computerWins++;
+    }
+  }
+
+  console.log();
+  console.log((playerWins) > 0 && (playerWins > computerWins) ? "You are the winner!" : "You are the loser!");
+  console.log(`Your score: ${playerWins}`);
+  console.log(`Computer score: ${computerWins}`);
+};
 
 const playRound = (playerPick, computerPick) => {
   let result;
   const playersChoices = `\nYou: ${playerPick}\nComputer: ${computerPick}`;
-  const winMessage = `You Win!${playersChoices}`;
-  const loseMessage = `You Lose!${playersChoices}`;
-  const tieMessage = `Tie!${playersChoices}`;
+  const winMessage = `You win!${playersChoices}`;
+  const loseMessage = `You lose!${playersChoices}`;
+  const tieMessage = `It's a tie!${playersChoices}`;
   
   // Evaluate order is: tie, win lose
   if (playerPick === "rock") {
@@ -30,7 +66,7 @@ const playRound = (playerPick, computerPick) => {
     } else {
       result = loseMessage;
     }
-  } else {
+  } else if (playerPick === "scissors") {
     if (computerPick === "scissors") {
       result = tieMessage;
     } else if (computerPick === "paper") {
@@ -39,8 +75,9 @@ const playRound = (playerPick, computerPick) => {
       result = loseMessage
     }
   }
-
+  console.log(result);
   return result;
 }
 
-console.log(playRound(playerPick, computerPick));
+// TODO Restrict non-numbers [NaN] from being submitted.
+round(Number(prompt("Number of rounds?", 1)));
