@@ -1,83 +1,129 @@
-const choices = ["rock", "paper", "scissors"];
+const stringChoices = ['rock', 'paper', 'scissors'];
+const roundCounter = document.querySelector('#round-counter');
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
+const playerChoice = document.querySelector('.player-choice');
+const computerChoice = document.querySelector('.computer-choice');
+const finalWinner = document.querySelector('.final-winner p');
+const getRandomPick = () =>
+  stringChoices[Math.floor(Math.random() * stringChoices.length)];
+const choices = document.querySelectorAll('.choices img');
 
-const getRandomPick = () => choices[Math.floor(Math.random() * choices.length)];
-const getPlayerPick = () => {
-  while (true) {
-    let playerPick = prompt("rock, paper, scissors: ");
+function updateRoundCounter(round = -1) {
+  roundCounter.innerText = `Round ${round}`;
+}
 
-    if (playerPick === null) {
-      return null;
-    } else if (playerPick.toLowerCase() === "rock" || playerPick.toLowerCase() === "paper" || playerPick.toLowerCase() === "scissors") {
-      return playerPick;
-    } else {
-      continue;
-    }
+function updateScores(wins) {
+  playerScore.innerText = wins.player;
+  computerScore.innerText = wins.computer;
+}
+
+function updateChoices(choice) {
+  playerChoice.innerText = `You: ${choice.player}`;
+  computerChoice.innerText = `Computer: ${choice.computer}`;
+}
+
+function checkRoundWinner(resultObject, winsObject) {
+  if (resultObject.playerWin) {
+    winsObject.player++;
+  } else if (resultObject.computerWin) {
+    winsObject.computer++;
   }
+}
+
+function evaluateResult(result) {
+  let resultString;
+
+  const resultMessage = {
+    win: 'You win!',
+    lose: 'You lose!',
+    tie: 'Tie!',
+  };
+  if (result.playerWin) {
+    resultString = resultMessage.win;
+  } else if (result.computerWin) {
+    resultString = resultMessage.lose;
+  } else {
+    resultString = resultMessage.tie;
+  }
+
+  return resultString;
+}
+
+function displayResult(result, lastRound = false, wins) {
+  const resultPara = document.querySelector('.result p');
+
+  if (lastRound) {
+    finalWinner.innerText = `The winner is: ${
+      wins.player > wins.computer ? 'You' : 'Computer'
+    }`;
+  }
+  resultPara.innerText = evaluateResult(result);
+  // TODO end game when last round
 }
 
 const round = (roundAmount) => {
-  let playerWins = 0;
-  let computerWins = 0;
+  const wins = { player: 0, computer: 0 };
+  const choice = { player: '', computer: '' };
+  let round = 1;
+  updateRoundCounter(round);
 
-  for (let counter = 1; counter <= roundAmount; counter++) {
-    console.log(`Round ${counter}`);
-    const playerPick = getPlayerPick();
-    const computerPick = getRandomPick();
-    if (playerPick === null) {
-      console.log("You quit");
-      break;
-    }
+  choices.forEach((imageButton) =>
+    imageButton.addEventListener('click', () => {
+      choice.player = imageButton.id;
+      choice.computer = getRandomPick();
+      updateRoundCounter(round);
+      updateChoices(choice);
 
-    const result = playRound(playerPick, computerPick);
-    if (result.includes("win")) {
-      playerWins++;
-    } else if (result.includes("lose")) {
-      computerWins++;
-    }
-  }
+      const result = playRound(choice);
 
-  console.log();
-  console.log((playerWins) > 0 && (playerWins > computerWins) ? "You are the winner!" : "You are the loser!");
-  console.log(`Your score: ${playerWins}`);
-  console.log(`Computer score: ${computerWins}`);
+      checkRoundWinner(result, wins);
+
+      updateScores(wins);
+      if (round >= roundAmount) {
+        round = 1;
+
+        displayResult(result, true, wins);
+
+        wins.player = 0;
+        wins.computer = 0;
+      } else {
+        displayResult(result);
+        round++;
+        finalWinner.innerText = '';
+      }
+    })
+  );
 };
 
-const playRound = (playerPick, computerPick) => {
-  let result;
-  const playersChoices = `\nYou: ${playerPick}\nComputer: ${computerPick}`;
-  const winMessage = `You win!${playersChoices}`;
-  const loseMessage = `You lose!${playersChoices}`;
-  const tieMessage = `It's a tie!${playersChoices}`;
-  
+const playRound = (choice) => {
+  let result = { playerWin: false, computerWin: false, tie: false };
+
   // Evaluate order is: tie, win lose
-  if (playerPick === "rock") {
-    if (computerPick === "rock") {
-      result = tieMessage;
-    } else if (computerPick === "scissors") {
-      result = winMessage;
+  if (choice.player === choice.computer) {
+    result.tie = true;
+  } else if (choice.player === 'rock') {
+    if (choice.computer === 'scissors') {
+      result.playerWin = true;
     } else {
-      result = loseMessage;
+      result.computerWin = true;
     }
-  } else if (playerPick === "paper") {
-    if (computerPick === "paper") {
-      result = tieMessage;
-    } else if (computerPick === "rock") {
-      result = winMessage;
+  } else if (choice.player === 'paper') {
+    if (choice.computer === 'rock') {
+      result.playerWin = true;
     } else {
-      result = loseMessage;
+      result.computerWin = true;
     }
-  } else if (playerPick === "scissors") {
-    if (computerPick === "scissors") {
-      result = tieMessage;
-    } else if (computerPick === "paper") {
-      result = winMessage;
+  } else if (choice.player === 'scissors') {
+    if (choice.computer === 'paper') {
+      result.playerWin = true;
     } else {
-      result = loseMessage
+      result.computerWin = true;
     }
   }
-  console.log(result);
+
   return result;
-}
+};
 
 // TODO Restrict non-numbers [NaN] from being submitted.
-round(Number(prompt("Number of rounds?", 1)));
+round(5);

@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="script.js" defer></script>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="round-counter">Round:</h1>
+      <div class="choices">
+        <img
+          src="./img/rock.jpeg"
+          id="rock"
+          alt=""
+          width="250px"
+          height="250px"
+        />
+        <img
+          src="./img/pepper.jpeg"
+          id="paper"
+          alt=""
+          width="250px"
+          height="250px"
+        />
+        <img
+          src="./img/seashore.jpeg"
+          id="scissors"
+          alt=""
+          width="250px"
+          height="250px"
+        />
+      </div>
+      <div class="results">
+        <div class="player">
+          <p class="player-score">0</p>
+          <p class="player-choice">You:</p>
+        </div>
+
+        <div class="computer">
+          <p class="computer-score">0</p>
+          <p class="computer-choice">Computer:</p>
+        </div>
+      </div>
+      <div class="result">
+        <p></p>
+      </div>
+      <div class="final-winner">
+        <p></p>
+      </div>
+    </div>
+  </body>
 </html>
