@@ -56,3 +56,29 @@ function checkComputerChoice(rounds) {
 
   console.log(`Rock: ${rCounter}\nPaper: ${pCounter}\nScissors: ${sCounter}`);
 }
+
+function getHumanChoice() {
+  return prompt("Rock, Paper or Scissors?");
+}
+
+function validateChoice(choice) {
+  if (!choice) {
+    console.log("Invalid choice.");
+    return;
+  }
+
+  choice = choice.toLowerCase();
+
+  if (choice === "rock" || choice === "paper" || choice === "scissors") {
+    return true;
+  } else {
+    console.log("You didn't type rock, paper, or scissors.");
+    return false;
+  }
+}
+
+let humanChoice = getHumanChoice();
+
+if (validateChoice(humanChoice)) {
+  console.log(`You chose ${humanChoice.toLowerCase()}`);
+}
