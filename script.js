@@ -77,6 +77,8 @@ function validateChoice(choice) {
   }
 }
 
+let humanScore = 0;
+let computerScore = 0;
 let humanChoice = getHumanChoice();
 
 if (!validateChoice(humanChoice)) {
