@@ -1,4 +1,4 @@
-function getComputerChoice() {
+function getRandomChoice() {
   let randomNumber = getRandomNumber();
   let computerChoice = "";
 
@@ -44,7 +44,7 @@ function checkComputerChoice(rounds) {
     sCounter = 0;
 
   for (let i = 0; i < rounds; i++) {
-    let result = getComputerChoice();
+    let result = getRandomChoice();
     if (result === "rock") {
       rCounter++;
     } else if (result === "paper") {
