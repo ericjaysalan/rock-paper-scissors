@@ -77,13 +77,40 @@ function validateChoice(choice) {
   }
 }
 
-let humanScore = 0;
-let computerScore = 0;
-let humanChoice = getHumanChoice();
+function playRound(humanChoice, computerChoice) {
+  let finalChoices = `You chose: ${humanChoice}. Computer chose: ${computerChoice}`;
 
-if (!validateChoice(humanChoice)) {
-  console.log("Generating random choice.");
-  humanChoice = getRandomChoice();
+  if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    console.log(
+      `You Win! ${finalChoices}\n${humanChoice} beats ${computerChoice}`
+    );
+    humanScore++;
+  } else if (humanChoice === computerChoice) {
+    console.log(
+      `It's a tie! ${finalChoices}\n${humanChoice} cannot beat ${computerChoice}`
+    );
+  } else {
+    console.log(
+      `You Lose! ${finalChoices}\n${humanChoice} is beaten by ${computerChoice}`
+    );
+    computerScore++;
+  }
 }
 
-console.log(`You chose ${humanChoice.toLowerCase()}`);
+let humanScore = 0;
+let computerScore = 0;
+let humanSelection = getHumanChoice();
+let computerSelection = getRandomChoice();
+
+if (!validateChoice(humanSelection)) {
+  console.log("Generating random choice.");
+  humanSelection = getRandomChoice();
+}
+
+humanSelection = humanSelection.toLowerCase();
+
+playRound(humanSelection, computerSelection);
