@@ -64,7 +64,7 @@ function getHumanChoice() {
 function validateChoice(choice) {
   if (!choice) {
     console.log("Invalid choice.");
-    return;
+    return false;
   }
 
   choice = choice.toLowerCase();
@@ -79,6 +79,9 @@ function validateChoice(choice) {
 
 let humanChoice = getHumanChoice();
 
-if (validateChoice(humanChoice)) {
-  console.log(`You chose ${humanChoice.toLowerCase()}`);
+if (!validateChoice(humanChoice)) {
+  console.log("Generating random choice.");
+  humanChoice = getRandomChoice();
 }
+
+console.log(`You chose ${humanChoice.toLowerCase()}`);
