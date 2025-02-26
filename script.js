@@ -58,10 +58,19 @@ function checkComputerChoice(rounds) {
 }
 
 function getHumanChoice() {
-  return prompt("Rock, Paper or Scissors?");
+  let choice = prompt("Rock, Paper or Scissors?");
+
+  // If the input is either null or undefined, a random choice is generated.
+  if (!validateChoice(choice)) {
+    console.log("Generating random choice.");
+    choice = getRandomChoice();
+  }
+
+  return choice;
 }
 
 function validateChoice(choice) {
+  // For when the input is null or undefined.
   if (!choice) {
     console.log("Invalid choice.");
     return false;
@@ -105,12 +114,5 @@ let humanScore = 0;
 let computerScore = 0;
 let humanSelection = getHumanChoice();
 let computerSelection = getRandomChoice();
-
-if (!validateChoice(humanSelection)) {
-  console.log("Generating random choice.");
-  humanSelection = getRandomChoice();
-}
-
-humanSelection = humanSelection.toLowerCase();
 
 playRound(humanSelection, computerSelection);
