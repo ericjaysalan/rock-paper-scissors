@@ -118,7 +118,7 @@ function playGame() {
   let computerSelection = "";
   let result = "";
 
-  for (let i = 0; i < 5; i++) {
+  /* for (let i = 0; i < 5; i++) {
     humanSelection = getHumanChoice();
     computerSelection = getRandomChoice();
     result = playRound(humanSelection, computerSelection);
@@ -133,7 +133,7 @@ function playGame() {
       default:
         break;
     }
-  }
+  } */
 
   console.log(`Player wins: ${humanScore}\nComputer wins: ${computerScore}`);
 }

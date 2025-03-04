@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  color: #f7f7f7;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  background-color: #854836;
+  color: #F7F7F7;
+  padding: 1rem;
+
+  border-bottom: 0.5px solid #FFB22C;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info {
+  padding: 0.5em;
+  margin: 1.5rem 0;
+}
+
+.choices {
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.choices button {
+  padding: 1rem 3rem;
+  background-color: #FFB22C;
+  color: #f7f7f7;
+
+  font-size: 32px;
+  font-weight: bolder;
+
+  border: 1px solid #854836;
+  border-radius: 15px;
+}
+
+.choices button:hover {
+  background-color: #854836;
+  color: #000;
+  transform: scale(1.2);
+}
+
+.scores {
+  padding: 2rem 16rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  font-size: 32px;
+}
