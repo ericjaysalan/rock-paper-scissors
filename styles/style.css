@@ -53,7 +53,7 @@ header {
   transform: scale(1.2);
 }
 
-.scores {
+.scoreboard {
   padding: 2rem 16rem;
   display: flex;
   justify-content: space-around;
