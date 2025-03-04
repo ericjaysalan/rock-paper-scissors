@@ -57,35 +57,6 @@ function checkComputerChoice(rounds) {
   console.log(`Rock: ${rCounter}\nPaper: ${pCounter}\nScissors: ${sCounter}`);
 }
 
-function getHumanChoice() {
-  let choice = prompt("Rock, Paper or Scissors?");
-
-  // If the input is either null or undefined, a random choice is generated.
-  if (!validateChoice(choice)) {
-    console.log("Generating random choice.");
-    choice = getRandomChoice();
-  }
-
-  return choice;
-}
-
-function validateChoice(choice) {
-  // For when the input is null or undefined.
-  if (!choice) {
-    console.log("Invalid choice.");
-    return false;
-  }
-
-  choice = choice.toLowerCase();
-
-  if (choice === "rock" || choice === "paper" || choice === "scissors") {
-    return true;
-  } else {
-    console.log("You didn't type rock, paper, or scissors.");
-    return false;
-  }
-}
-
 function playRound(humanChoice, computerChoice) {
   let finalChoices = `You chose: ${humanChoice}. Computer chose: ${computerChoice}`;
 
@@ -122,27 +93,39 @@ function initializeButtons() {
   });
 }
 
-function playGame(buttonThatWasPressed) {
-  let humanScore = 0;
-  let computerScore = 0;
-  let humanSelection = buttonThatWasPressed.textContent.toLowerCase();
-  let computerSelection = getRandomChoice();
-  let result = "";
+function getScore(scoreElement) {
+  return Number(scoreElement.textContent.at(-1));
+}
 
-  result = playRound(humanSelection, computerSelection);
+function incrementScore(scoreElement) {
+  let currentScore = getScore(scoreElement);
+  const label = scoreElement.textContent.split(" ")[0];
+
+  scoreElement.textContent = `${label} ${currentScore + 1}`;
+}
+
+function playGame(buttonThatWasPressed) {
+  const playerScoreSpanElement = document.querySelector(".player-score");
+  const computerScoreSpanElement = document.querySelector(".computer-score");
+  let playerScore = getScore(playerScoreSpanElement);
+  let computerScore = getScore(computerScoreSpanElement);
+
+  let playerSelection = buttonThatWasPressed.textContent.toLowerCase();
+  let computerSelection = getRandomChoice();
+  const result = playRound(playerSelection, computerSelection);
 
   switch (result) {
     case "win":
-      humanScore++;
+      incrementScore(playerScoreSpanElement);
       break;
     case "lose":
-      computerScore++;
+      incrementScore(computerScoreSpanElement);
       break;
     default:
       break;
   }
 
-  console.log(`Player wins: ${humanScore}\nComputer wins: ${computerScore}`);
+  console.log(`Player wins: ${playerScore}\nComputer wins: ${computerScore}`);
 }
 
 initializeButtons();
