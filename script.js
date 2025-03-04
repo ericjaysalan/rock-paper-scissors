@@ -111,31 +111,38 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
-function playGame() {
+function initializeButtons() {
+  const buttons = document.querySelectorAll(".choice");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", (clickEvent) => {
+      const buttonThatWasPressed = clickEvent.target;
+      playGame(buttonThatWasPressed);
+    });
+  });
+}
+
+function playGame(buttonThatWasPressed) {
   let humanScore = 0;
   let computerScore = 0;
-  let humanSelection = "";
-  let computerSelection = "";
+  let humanSelection = buttonThatWasPressed.textContent.toLowerCase();
+  let computerSelection = getRandomChoice();
   let result = "";
 
-  /* for (let i = 0; i < 5; i++) {
-    humanSelection = getHumanChoice();
-    computerSelection = getRandomChoice();
-    result = playRound(humanSelection, computerSelection);
+  result = playRound(humanSelection, computerSelection);
 
-    switch (result) {
-      case "win":
-        humanScore++;
-        break;
-      case "lose":
-        computerScore++;
-        break;
-      default:
-        break;
-    }
-  } */
+  switch (result) {
+    case "win":
+      humanScore++;
+      break;
+    case "lose":
+      computerScore++;
+      break;
+    default:
+      break;
+  }
 
   console.log(`Player wins: ${humanScore}\nComputer wins: ${computerScore}`);
 }
 
-playGame();
+initializeButtons();
