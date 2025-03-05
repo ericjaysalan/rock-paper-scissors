@@ -123,9 +123,6 @@ function playGame(buttonThatWasPressed) {
   const computerScoreSpanElement = document.querySelector(".computer-score");
   const resultDisplay = document.querySelector(".result");
 
-  let playerScore = getScore(playerScoreSpanElement);
-  let computerScore = getScore(computerScoreSpanElement);
-
   let playerSelection = buttonThatWasPressed.textContent.toLowerCase();
   let computerSelection = getRandomChoice();
   const result = playRound(playerSelection, computerSelection);
@@ -145,5 +142,5 @@ function playGame(buttonThatWasPressed) {
   messageToBeDisplayed = updateResult(result);
   resultDisplay.textContent = messageToBeDisplayed;
 }
-// TODO: dynamically change
+
 initializeButtons();
