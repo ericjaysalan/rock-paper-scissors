@@ -1,3 +1,12 @@
+const playerScoreSpanElement = document.querySelector(".player-score");
+const computerScoreSpanElement = document.querySelector(".computer-score");
+
+const choicesDisplay = document.querySelector(".display-choices");
+const player = choicesDisplay.firstElementChild;
+const computer = choicesDisplay.lastElementChild;
+
+const resultDisplay = document.querySelector(".result");
+
 function getRandomChoice() {
   let randomNumber = getRandomNumber();
   let computerChoice = "";
@@ -87,6 +96,10 @@ function getScore(scoreElement) {
   return Number(scoreElement.textContent.at(-1));
 }
 
+function setScore(scoreElement, scoreToSet) {
+  scoreElement.textContent = scoreElement.textContent.slice(0, -1) + scoreToSet;
+}
+
 function incrementScore(scoreElement) {
   let currentScore = getScore(scoreElement);
   const label = scoreElement.textContent.split(" ")[0];
@@ -109,20 +122,21 @@ function updateResult(winLoseOrTie) {
 }
 
 function displayChoices(playerChoice, computerChoice) {
-  const choicesDisplay = document.querySelector(".display-choices");
-  const player = choicesDisplay.firstElementChild;
-  const computer = choicesDisplay.lastElementChild;
-
   player.textContent = playerChoice;
   computer.textContent = computerChoice;
 
   choicesDisplay.style.textTransform = "capitalize";
 }
 
+function endGame() {
+  setScore(playerScoreSpanElement, 0);
+  setScore(computerScoreSpanElement, 0);
+  displayChoices(" ", " ");
+}
+
 function playGame(buttonThatWasPressed) {
-  const playerScoreSpanElement = document.querySelector(".player-score");
-  const computerScoreSpanElement = document.querySelector(".computer-score");
-  const resultDisplay = document.querySelector(".result");
+  let playerScore = getScore(playerScoreSpanElement);
+  let computerScore = getScore(computerScoreSpanElement);
 
   let playerSelection = buttonThatWasPressed.textContent.toLowerCase();
   let computerSelection = getRandomChoice();
@@ -134,14 +148,23 @@ function playGame(buttonThatWasPressed) {
   switch (result) {
     case "win":
       incrementScore(playerScoreSpanElement);
+      playerScore = getScore(playerScoreSpanElement);
       break;
     case "lose":
       incrementScore(computerScoreSpanElement);
+      computerScore = getScore(computerScoreSpanElement);
       break;
   }
 
   messageToBeDisplayed = updateResult(result);
   resultDisplay.textContent = messageToBeDisplayed;
+
+  if (playerScore === 5 || computerScore === 5) {
+    let winner = playerScore === 5 ? "You" : "Computer";
+    endGame();
+
+    resultDisplay.textContent = `Game End. ${winner} Won The Game.`;
+  }
 }
 
 initializeButtons();
