@@ -38,6 +38,7 @@ function getRandomNumber() {
   return random;
 }
 
+// Allows for simulated rounds.
 function checkComputerChoice(rounds) {
   let rCounter = 0,
     pCounter = 0,
