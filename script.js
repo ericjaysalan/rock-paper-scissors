@@ -107,6 +107,17 @@ function updateResult(winLoseOrTie) {
   return result;
 }
 
+function displayChoices(playerChoice, computerChoice) {
+  const choicesDisplay = document.querySelector(".display-choices");
+  const player = choicesDisplay.firstElementChild;
+  const computer = choicesDisplay.lastElementChild;
+
+  player.textContent = playerChoice;
+  computer.textContent = computerChoice;
+
+  choicesDisplay.style.textTransform = "capitalize";
+}
+
 function playGame(buttonThatWasPressed) {
   const playerScoreSpanElement = document.querySelector(".player-score");
   const computerScoreSpanElement = document.querySelector(".computer-score");
@@ -120,6 +131,8 @@ function playGame(buttonThatWasPressed) {
   const result = playRound(playerSelection, computerSelection);
   let messageToBeDisplayed = "";
 
+  displayChoices(playerSelection, computerSelection);
+
   switch (result) {
     case "win":
       incrementScore(playerScoreSpanElement);
@@ -132,5 +145,5 @@ function playGame(buttonThatWasPressed) {
   messageToBeDisplayed = updateResult(result);
   resultDisplay.textContent = messageToBeDisplayed;
 }
-
+// TODO: dynamically change
 initializeButtons();
