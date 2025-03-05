@@ -58,26 +58,15 @@ function checkComputerChoice(rounds) {
 }
 
 function playRound(humanChoice, computerChoice) {
-  let finalChoices = `You chose: ${humanChoice}. Computer chose: ${computerChoice}`;
-
   if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
-    console.log(
-      `You Win! ${finalChoices}\n${humanChoice} beats ${computerChoice}`
-    );
     return "win";
   } else if (humanChoice === computerChoice) {
-    console.log(
-      `It's a tie! ${finalChoices}\n${humanChoice} cannot beat ${computerChoice}`
-    );
     return "tie";
   } else {
-    console.log(
-      `You Lose! ${finalChoices}\n${humanChoice} is beaten by ${computerChoice}`
-    );
     return "lose";
   }
 }
@@ -104,15 +93,32 @@ function incrementScore(scoreElement) {
   scoreElement.textContent = `${label} ${currentScore + 1}`;
 }
 
+function updateResult(winLoseOrTie) {
+  let result = "";
+
+  if (winLoseOrTie === "win") {
+    result = "You Win!";
+  } else if (winLoseOrTie === "lose") {
+    result = "You Lose!";
+  } else {
+    result = "It's a tie!";
+  }
+
+  return result;
+}
+
 function playGame(buttonThatWasPressed) {
   const playerScoreSpanElement = document.querySelector(".player-score");
   const computerScoreSpanElement = document.querySelector(".computer-score");
+  const resultDisplay = document.querySelector(".result");
+
   let playerScore = getScore(playerScoreSpanElement);
   let computerScore = getScore(computerScoreSpanElement);
 
   let playerSelection = buttonThatWasPressed.textContent.toLowerCase();
   let computerSelection = getRandomChoice();
   const result = playRound(playerSelection, computerSelection);
+  let messageToBeDisplayed = "";
 
   switch (result) {
     case "win":
@@ -121,11 +127,10 @@ function playGame(buttonThatWasPressed) {
     case "lose":
       incrementScore(computerScoreSpanElement);
       break;
-    default:
-      break;
   }
 
-  console.log(`Player wins: ${playerScore}\nComputer wins: ${computerScore}`);
+  messageToBeDisplayed = updateResult(result);
+  resultDisplay.textContent = messageToBeDisplayed;
 }
 
 initializeButtons();
